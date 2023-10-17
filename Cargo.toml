@@ -1,5 +1,5 @@
 [package]
-name = "gru"
+name = "rename-gru"
 version = "0.1.0"
 edition = "2021"
 keywords = ["rename-utility", "cli", "rename", "batch", "command"]
