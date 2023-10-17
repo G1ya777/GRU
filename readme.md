@@ -10,4 +10,4 @@ A **cli tool** to batch rename all the files in the provided directory
 
 # Install
 * **using crago** : `cargo add rename-gru`
-* or build from source `git clone https://github.com/G1ya777/GRU/edit/main/readme.md && cd GRU` then `cargo build`
+* or build from source `git clone https://github.com/G1ya777/GRU && cd GRU` then `cargo build`
