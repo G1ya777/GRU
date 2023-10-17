@@ -1,4 +1,4 @@
-# GRU G Rename Utility
+# GRU : G Rename Utility
 
 A **cli tool** to batch rename all the files in the provided directory
 
