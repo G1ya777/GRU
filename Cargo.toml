@@ -1,0 +1,23 @@
+[package]
+name = "gru"
+version = "0.1.0"
+edition = "2021"
+keywords = ["rename utility", "cli", "rename", "batch", "command line utilities"]
+categories = ["command-line-utilities", "development-tools::cargo-plugins"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+chrono = "0.4.31"
+clap = { version = "4.4.6", features = ["derive"] }
+file-id = "0.2.1"
+serde_json = "1.0.107"
+
+
+
+[profile.release]
+opt-level = 'z'     # Optimize for size
+lto = true          # Enable link-time optimization
+codegen-units = 1   # Reduce number of codegen units to increase optimizations
+panic = 'abort'     # Abort on panic
+strip = true        # Strip symbols from binary*
