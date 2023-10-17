@@ -2,7 +2,7 @@
 name = "gru"
 version = "0.1.0"
 edition = "2021"
-keywords = ["rename utility", "cli", "rename", "batch", "command line utilities"]
+keywords = ["rename-utility", "cli", "rename", "batch", "command", "line"]
 categories = ["command-line-utilities", "development-tools::cargo-plugins"]
 license = "MIT"
 description = "A cli tool to batch rename all the files in the provided directory"
