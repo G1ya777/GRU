@@ -9,5 +9,6 @@ A **cli tool** to batch rename all the files in the provided directory
 * **All the basic stuff like clear og names, numbering, add prefix, remove n first...** for an exhaustive list of the options run bru --help
 
 # Install
-* **using crago** : `cargo add rename-gru`
+* **using crago** : `cargo install rename-gru`
 * or build from source `git clone https://github.com/G1ya777/GRU && cd GRU` then `cargo build`
+* or use on of the binaries in the release section
