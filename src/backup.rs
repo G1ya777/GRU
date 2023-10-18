@@ -4,16 +4,19 @@ use std::{
     collections::HashMap,
     fs::{self, DirEntry, File},
     io::{BufReader, BufWriter},
-    path::Path,
+    path::PathBuf,
 };
 
 pub fn backup(filenames_list: &Vec<String>, location: &String) {
-    let backup_path = location.to_owned()
-        + "/gru_"
-        + &(Utc::now().to_string().replace(" ", "_"))
-        + "_grubcp.json";
+    let backup_path = {
+        let mut path = PathBuf::new();
+        path.push(location);
+        path.push("gru_".to_string() + &Utc::now().to_string().replace(" ", "_"));
+        path.set_extension("json");
+        path
+    };
 
-    let backup_path = Path::new(&backup_path);
+    // let backup_path: &Path = backup_path.as_path();
     let file: File = File::create(backup_path).expect("error when creating file for backup!");
 
     let mut backup_data: Vec<String> = vec![];
@@ -69,7 +72,6 @@ pub fn restore(backup_file_location: String, file_list: &Vec<DirEntry>) {
             FileId::Inode { inode_number, .. } => id_string = inode_number.to_string(),
             FileId::LowRes { file_index, .. } => id_string = file_index.to_string(),
         }
-        println!("{id_string}");
         let new_file_path = dir_entry.path().with_file_name(
             file_dict
                 .get(&id_string)

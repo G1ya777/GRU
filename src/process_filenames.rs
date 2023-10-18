@@ -12,7 +12,6 @@ pub fn process(args: &Args, filenames: &Vec<String>) -> Vec<String> {
         if args.target_extension != "" {
             if extension != args.target_extension {
                 new_filename += &extension;
-                println!("{new_filename}");
                 continue;
             }
         }
