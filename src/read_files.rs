@@ -9,6 +9,7 @@ pub fn read(
 ) -> Vec<DirEntry> {
     // read the specified directory
     let file_set = fs::read_dir(location).expect("something went wrong with the provided location");
+
     let file_list = (file_set.collect::<Result<Vec<_>, _>>())
         .expect("failed to read one of the files in provided location");
 

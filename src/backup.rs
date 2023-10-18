@@ -4,6 +4,7 @@ use std::{
     collections::HashMap,
     fs::{self, DirEntry, File},
     io::{BufReader, BufWriter},
+    path::Path,
 };
 
 pub fn backup(filenames_list: &Vec<String>, location: &String) {
@@ -11,6 +12,8 @@ pub fn backup(filenames_list: &Vec<String>, location: &String) {
         + "/gru_"
         + &(Utc::now().to_string().replace(" ", "_"))
         + "_grubcp.json";
+
+    let backup_path = Path::new(&backup_path);
     let file: File = File::create(backup_path).expect("error when creating file for backup!");
 
     let mut backup_data: Vec<String> = vec![];

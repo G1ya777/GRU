@@ -28,9 +28,6 @@ fn main() {
     if !filenames.is_empty() {
         if &args.restore == "" {
             let new_filenames = process_filenames::process(&args, &filenames);
-            for new_filename in new_filenames.iter() {
-                println!("{new_filename}")
-            }
             if !args.no_bcp {
                 backup::backup(&filenames, &args.location)
             }
