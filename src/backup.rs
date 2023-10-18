@@ -11,7 +11,7 @@ pub fn backup(filenames_list: &Vec<String>, location: &String) {
     let backup_path = {
         let mut path = PathBuf::new();
         path.push(location);
-        path.push("gru_".to_string() + &Utc::now().to_string().replace(" ", "_"));
+        path.push("gru-".to_string() + &Utc::now().to_string().replace(" ", "-"));
         path.set_extension("json");
         path
     };
