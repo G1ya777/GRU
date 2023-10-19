@@ -19,11 +19,13 @@ fn main() {
         args.desc,
         args.only_files,
         args.only_folders,
+        args.incl_hidden && args.restore == "",
     );
     if args.restore != "" {
         backup::restore(args.restore.clone(), &filelist);
     }
-    let filenames: Vec<String> = get_filenames::get(&filelist);
+    let filenames: Vec<String> =
+        get_filenames::get(&filelist, args.incl_hidden && args.restore == "");
 
     if !filenames.is_empty() {
         if &args.restore == "" {

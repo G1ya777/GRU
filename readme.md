@@ -13,3 +13,8 @@ A **cli tool** to batch rename all the files in the provided directory
 - **using crago** : `cargo install rename-gru`
 - or build from source `git clone https://github.com/G1ya777/GRU && cd GRU` then `cargo build`
 - or use one of the binaries in the release section
+
+# Found a bug or want a new feature ?
+
+- **`https://github.com/G1ya777/GRU/issues/new`**
+- any help would be appreciated.

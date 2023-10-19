@@ -11,7 +11,9 @@ pub fn backup(filenames_list: &Vec<String>, location: &String) {
     let backup_path = {
         let mut path = PathBuf::new();
         path.push(location);
-        path.push("gru-".to_string() + &Utc::now().to_string().replace(" ", "-").replace(":", "-"));
+        path.push(
+            "grubcp-".to_string() + &Utc::now().to_string().replace(" ", "-").replace(":", "-"),
+        );
         path.set_extension("json");
         path
     };
@@ -22,10 +24,25 @@ pub fn backup(filenames_list: &Vec<String>, location: &String) {
     let mut backup_data: Vec<String> = vec![];
     for filename in filenames_list.iter() {
         let filename = filename.to_owned();
-        let id = file_id::get_file_id(location.clone() + "/" + &filename)
-            .expect("failed to get the id of one of the files.");
-        let id_string;
+        let mut file_path = PathBuf::new();
+        file_path.push(location.clone());
+        file_path.push(&filename);
+        let id = file_id::get_file_id(file_path);
+        let mut id_value = FileId::Inode {
+            device_id: 0,
+            inode_number: 0,
+        };
         match id {
+            Ok(id) => id_value = id,
+            Err(error) => {
+                println!(
+                    "couldn't get one of the file ids (maybe it is protected), {}",
+                    error
+                )
+            }
+        }
+        let id_string: String;
+        match id_value {
             FileId::HighRes { file_id, .. } => id_string = file_id.to_string(),
             FileId::Inode { inode_number, .. } => id_string = inode_number.to_string(),
             FileId::LowRes { file_index, .. } => id_string = file_index.to_string(),

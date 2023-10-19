@@ -6,6 +6,7 @@ pub fn read(
     desc: bool,
     only_files: bool,
     only_folders: bool,
+    _incl_hidden: bool,
 ) -> Vec<DirEntry> {
     // read the specified directory
     let file_set = fs::read_dir(location).expect("something went wrong with the provided location");
@@ -13,6 +14,23 @@ pub fn read(
     let file_list = (file_set.collect::<Result<Vec<_>, _>>())
         .expect("failed to read one of the files in provided location");
 
+    #[cfg(windows)]
+    let mut filtered_file_list: Vec<DirEntry> = file_list
+        .into_iter()
+        .filter(|file| !only_files || file.path().is_file())
+        .filter(|file| !only_folders || file.path().is_dir())
+        .filter(|file| _incl_hidden || !is_hidden(&file.path()))
+        .filter(|file| {
+            !file
+                .file_name()
+                .to_str()
+                .expect("failed to read one of the files in the specified folder")
+                .contains("grubcp-")
+        })
+        .collect();
+
+    #[cfg(unix)]
+    //filtering is done in get_filenames modules on unix
     let mut filtered_file_list: Vec<DirEntry> = file_list
         .into_iter()
         .filter(|file| !only_files || file.path().is_file())
@@ -22,7 +40,7 @@ pub fn read(
                 .file_name()
                 .to_str()
                 .expect("failed to read one of the files in the specified folder")
-                .contains("_grubcp.json")
+                .contains("grubcp-")
         })
         .collect();
 
@@ -51,4 +69,17 @@ pub fn read(
     }
 
     return filtered_file_list;
+}
+
+#[cfg(windows)]
+pub fn is_hidden(file_path: &std::path::Path) -> bool {
+    use std::os::windows::prelude::*;
+    let metadata = fs::metadata(file_path).expect("");
+    let attributes = metadata.file_attributes();
+
+    if (attributes & 0x2) > 0 {
+        true
+    } else {
+        false
+    }
 }

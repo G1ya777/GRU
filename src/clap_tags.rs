@@ -3,7 +3,7 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[command(author, version = "0.1.0", about, long_about = None, arg_required_else_help = true)]
 pub struct Args {
-    #[arg(long, default_value_t = String::new(), conflicts_with_all = RESTORE_CONFLICTS)]
+    #[arg(long, default_value_t = String::new(), conflicts_with_all = RESTORE_CONFLICTS,hide_default_value = true)]
     pub restore: String,
 
     ///location of the files to rename
@@ -30,7 +30,7 @@ pub struct Args {
     #[arg(short, long, default_value_t = false)]
     pub numbering: bool,
     /// specify padding for numbering, use --no-pad to disable (defaults to number of digits of number of files - 1)
-    #[arg(long, default_value_t = 0)]
+    #[arg(long, default_value_t = 0, hide_default_value = true)]
     pub pad: u8,
     //disable padding
     #[arg(long, default_value_t = false)]
@@ -50,7 +50,7 @@ pub struct Args {
     pub extension_to_replace: String,
 
     ///how to sort files, default is 0 (by name), 1 is by modification date, 2 for date created.
-    #[arg(long, default_value_t = 0)]
+    #[arg(long, default_value_t = 0, hide_default_value = true)]
     pub sort_by: u8,
 
     ///set file sort to descending
@@ -107,10 +107,14 @@ pub struct Args {
     /// disable temporary renaming (used to avoid cycles)
     #[arg(long, default_value_t = false)]
     pub no_temp_rename: bool,
+
+    /// also rename hidden files (turn off by default)
+    #[arg(long, default_value_t = false)]
+    pub incl_hidden: bool,
 }
 
 // use for disabling when restore
-const RESTORE_CONFLICTS: [&str; 22] = [
+const RESTORE_CONFLICTS: [&str; 23] = [
     "clear",
     "prefix",
     "suffix",
@@ -133,4 +137,5 @@ const RESTORE_CONFLICTS: [&str; 22] = [
     "times",
     "target_extension",
     "no_bcp",
+    "incl_hidden",
 ];
