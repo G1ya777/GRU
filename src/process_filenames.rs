@@ -37,20 +37,20 @@ pub fn process(args: &Args, filenames: &Vec<String>) -> Vec<String> {
             new_filename = new_filename.replacen(occurance, "", usize::from(args.times));
         }
 
+        if args.main_filename != "" {
+            new_filename += &args.main_filename;
+        }
+        if args.numbering && args.before_main_name {
+            new_filename =
+                pad_number(default_pad, args.pad, args.no_pad, count) + "-" + &new_filename;
+        }
         if args.prefix != "" {
             new_filename = args.prefix.clone() + &new_filename;
         }
 
-        if args.numbering && args.before_main_name {
-            new_filename += &pad_number(default_pad, args.pad, args.no_pad, count);
-        }
-
-        if args.main_filename != "" {
-            new_filename += &args.main_filename.clone();
-        }
-
         if args.numbering && !args.before_main_name {
-            new_filename += &pad_number(default_pad, args.pad, args.no_pad, count);
+            new_filename =
+                new_filename + "-" + &pad_number(default_pad, args.pad, args.no_pad, count);
         }
 
         if args.extension_replace_by != "" {

@@ -24,18 +24,21 @@ A **cli tool** to batch rename all the files in the provided directory
 # Usage examples
 
 - **rename video files, add tags at the end**<br />
-  `rename-gru ~/myTvShow --clear --prefix "MTVS-" --numbering --suffix "\ \[AWSMUploader\]\ \[1080P\]"`
+  `rename-gru ~/myTvShow --clear --prefix "MTVS" --numbering --suffix "\ \[AWSMUploader\]\ \[1080P\]"`
 
 - **rename background files, use random ordering**<br />
-  `rename-gru ~/myBackgrounds --clear --prefix "bg-" --numbering --sort-by 3`
+  `rename-gru ~/myBackgrounds --clear --prefix "bg" --numbering --sort-by 3`
+
+- **keep title and add numbering at the start of the file**
+  `rename-gru ~/myBackgrounds --numbering -b --sort-by 3`
 
 - **rename .mp3 file only**<br />
-  `rename-gru ~/myMusic --clear --prefix "song-" --numbering --sort-by 3 -t ".mp3"`
+  `rename-gru ~/myMusic --clear --prefix "song" --numbering --sort-by 3 -t ".mp3"`
 
 - **restore original file names**<br />
   `rename-gru ~/myMusic --restore "~/myMusic/grubcp-2023-10-22-18-17-23.json"`
 
 # Found a bug or want a new feature ?
 
-- **`https://github.com/G1ya777/GRU/issues/new`**
+- **[Issues](https://github.com/G1ya777/GRU/issues/new)**
 - any help would be appreciated.

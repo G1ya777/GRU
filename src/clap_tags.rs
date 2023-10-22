@@ -22,7 +22,7 @@ pub struct Args {
     #[arg(short, long, default_value_t = String::new(),hide_default_value = true)]
     pub suffix: String,
 
-    /// add a main filename
+    /// add a main filename (when --clear it is added before the original filename)
     #[arg(short, long, default_value_t = String::new(),hide_default_value = true)]
     pub main_filename: String,
 
