@@ -1,6 +1,6 @@
 [package]
 name = "rename-gru"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
 keywords = ["rename-utility", "cli", "rename", "batch", "command"]
 categories = ["command-line-utilities"]
@@ -13,6 +13,8 @@ readme = "readme.md"
 chrono = "0.4.31"
 clap = { version = "4.4.6", features = ["derive"] }
 file-id = "0.2.1"
+rand = "0.8.5"
+renamore = "0.3.2"
 serde_json = "1.0.107"
 
 

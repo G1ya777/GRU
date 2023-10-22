@@ -1,3 +1,4 @@
+use rand::{prelude::thread_rng, seq::SliceRandom};
 use std::fs::{self, DirEntry};
 
 pub fn read(
@@ -44,7 +45,7 @@ pub fn read(
         })
         .collect();
 
-    // Sort the files by the provided sort_by, 1 is for date modified, 2 is for date created, 0 or any other value is for name
+    // Sort the files by the provided sort_by, 1 is for date modified, 2 is for date created, 3 for random, 0 or any other value is for name
     if sort_by == 1 {
         filtered_file_list.sort_by_cached_key(|file| {
             fs::metadata(file.path())
@@ -59,15 +60,16 @@ pub fn read(
                 .created()
                 .expect("Error when sorting files")
         });
+    } else if sort_by == 3 {
+        filtered_file_list.shuffle(&mut thread_rng());
     } else {
-        filtered_file_list.sort_by_cached_key(|file| file.file_name())
+        filtered_file_list.sort_by_cached_key(|file| file.file_name());
     }
 
     // Descending sort if requested
     if desc {
-        filtered_file_list.reverse()
+        filtered_file_list.reverse();
     }
-
     return filtered_file_list;
 }
 

@@ -49,7 +49,7 @@ pub struct Args {
     #[arg(long, default_value_t = String::new(), group = "extension_group_2",hide_default_value = true)]
     pub extension_to_replace: String,
 
-    ///how to sort files, default is 0 (by name), 1 is by modification date, 2 for date created.
+    ///how to sort files, default is 0 (by name), 1 is by modification date, 2 for date created, 3 for random.
     #[arg(long, default_value_t = 0, hide_default_value = true)]
     pub sort_by: u8,
 
@@ -111,10 +111,14 @@ pub struct Args {
     /// also rename hidden files (turn off by default)
     #[arg(long, default_value_t = false)]
     pub incl_hidden: bool,
+
+    // use to preview file names, w/o writing.
+    #[arg(long, default_value_t = false)]
+    pub dry_run: bool,
 }
 
-// use for disabling when restore
-const RESTORE_CONFLICTS: [&str; 23] = [
+// used for disabling when restore
+const RESTORE_CONFLICTS: [&str; 24] = [
     "clear",
     "prefix",
     "suffix",
@@ -138,4 +142,5 @@ const RESTORE_CONFLICTS: [&str; 23] = [
     "target_extension",
     "no_bcp",
     "incl_hidden",
+    "dry_run",
 ];

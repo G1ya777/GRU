@@ -30,7 +30,12 @@ fn main() {
     if !filenames.is_empty() {
         if &args.restore == "" {
             let new_filenames = process_filenames::process(&args, &filenames);
-            if !args.no_bcp {
+            if args.dry_run {
+                for filename in &new_filenames {
+                    println!("{filename}")
+                }
+            }
+            if !args.no_bcp && !args.dry_run {
                 backup::backup(&filenames, &args.location)
             }
             //temprary renaming
@@ -40,10 +45,14 @@ fn main() {
                     let temp_filename = "temp-".to_string() + &i.to_string();
                     temp_filenames.push(temp_filename)
                 }
-                write_new_filenames::write(&args.location, &filenames, &temp_filenames);
-                write_new_filenames::write(&args.location, &temp_filenames, &new_filenames);
+                if !args.dry_run {
+                    write_new_filenames::write(&args.location, &filenames, &temp_filenames);
+                    write_new_filenames::write(&args.location, &temp_filenames, &new_filenames);
+                }
             } else {
-                write_new_filenames::write(&args.location, &filenames, &new_filenames);
+                if !args.dry_run {
+                    write_new_filenames::write(&args.location, &filenames, &new_filenames);
+                }
             }
         }
     } else {

@@ -1,4 +1,4 @@
-use std::fs::{self};
+use renamore::rename_exclusive;
 
 pub fn write(location: &str, filenames: &Vec<String>, new_filenames: &Vec<String>) {
     for (new_filename, filename) in new_filenames.iter().zip(filenames.iter()) {
@@ -7,6 +7,7 @@ pub fn write(location: &str, filenames: &Vec<String>, new_filenames: &Vec<String
         let new_file_path = location.to_string() + "/" + &new_filename;
 
         // Rename the file to the new path
-        fs::rename(file_path, &new_file_path).expect("failed to rename");
+        rename_exclusive(file_path, &new_file_path)
+            .expect("failed to rename, try removing --no-temp-rename flag");
     }
 }
