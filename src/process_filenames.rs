@@ -42,7 +42,7 @@ pub fn process(args: &Args, filenames: &Vec<String>) -> Vec<String> {
         }
         if args.numbering && args.before_main_name {
             new_filename =
-                pad_number(default_pad, args.pad, args.no_pad, count) + "-" + &new_filename;
+                pad_number(default_pad, args.pad, args.no_pad, count) + &args.separator + &new_filename;
         }
         if args.prefix != "" {
             new_filename = args.prefix.clone() + &new_filename;
@@ -50,7 +50,7 @@ pub fn process(args: &Args, filenames: &Vec<String>) -> Vec<String> {
 
         if args.numbering && !args.before_main_name {
             new_filename =
-                new_filename + "-" + &pad_number(default_pad, args.pad, args.no_pad, count);
+                new_filename + &args.separator + &pad_number(default_pad, args.pad, args.no_pad, count);
         }
 
         if args.extension_replace_by != "" {

@@ -26,9 +26,14 @@ pub struct Args {
     #[arg(short, long, default_value_t = String::new(),hide_default_value = true)]
     pub main_filename: String,
 
+    /// String to use as a separator (default is "-")
+    #[arg(long, default_value_t = String::from("-"),hide_default_value = true)]
+    pub separator: String,
+
     /// Add numbering
     #[arg(short, long, default_value_t = false)]
     pub numbering: bool,
+
     /// specify padding for numbering, use --no-pad to disable (defaults to number of digits of number of files - 1)
     #[arg(long, default_value_t = 0, hide_default_value = true)]
     pub pad: u8,
@@ -118,10 +123,11 @@ pub struct Args {
 }
 
 // used for disabling when restore
-const RESTORE_CONFLICTS: [&str; 24] = [
+const RESTORE_CONFLICTS: [&str; 25] = [
     "clear",
     "prefix",
     "suffix",
+    "separator",
     "main_filename",
     "numbering",
     "pad",
