@@ -13,7 +13,7 @@ mod write_new_filenames;
 fn main() {
     let args = clap_tags::Args::parse();
 
-    let filelist: Vec<DirEntry> = read_files::read(
+    let file_list: Vec<DirEntry> = read_files::read(
         &args.location,
         args.sort_by,
         args.desc,
@@ -21,15 +21,20 @@ fn main() {
         args.only_folders,
         args.incl_hidden && args.restore == "",
     );
+
     if args.restore != "" {
-        backup::restore(args.restore.clone(), &filelist);
+        backup::restore(args.restore.clone(), &file_list);
     }
     let filenames: Vec<String> =
-        get_filenames::get(&filelist, args.incl_hidden && args.restore == "");
+        get_filenames::get(&file_list, args.incl_hidden && args.restore == "");
 
     if !filenames.is_empty() {
+        let mut crc_list: Vec<String> = Vec::new();
+        if args.crc {
+            crc_list = read_files::get_crc_list(&file_list);
+        }
         if &args.restore == "" {
-            let new_filenames = process_filenames::process(&args, &filenames);
+            let new_filenames = process_filenames::process(&args, &filenames, &crc_list);
             if args.dry_run {
                 for filename in &new_filenames {
                     println!("{filename}")
@@ -38,7 +43,7 @@ fn main() {
             if !args.no_bcp && !args.dry_run {
                 backup::backup(&filenames, &args.location)
             }
-            //temprary renaming
+            //temporary renaming
             if !args.no_temp_rename {
                 let mut temp_filenames: Vec<String> = vec![];
                 for i in 0..new_filenames.len() {

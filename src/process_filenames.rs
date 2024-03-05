@@ -1,10 +1,10 @@
 use crate::clap_tags::Args;
-pub fn process(args: &Args, filenames: &Vec<String>) -> Vec<String> {
+pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> Vec<String> {
     let mut new_filenames: Vec<String> = vec![];
     let mut count: u32 = args.start;
     let default_pad =
         u8::try_from(filenames.len().to_string().len()).expect("error with number of files");
-    for filename in filenames.iter() {
+    for (index, filename) in filenames.iter().enumerate() {
         let (subname, mut extension): (&str, &str) = get_file_extension(&filename);
 
         let mut new_filename = subname.to_string();
@@ -30,27 +30,29 @@ pub fn process(args: &Args, filenames: &Vec<String>) -> Vec<String> {
         }
 
         if args.remove_all != "" {
-            let occurance = &args.remove_all;
-            new_filename = new_filename.replace(occurance, "");
+            let occurrence = &args.remove_all;
+            new_filename = new_filename.replace(occurrence, "");
         } else if args.remove_n != "" {
-            let occurance = &args.remove_n;
-            new_filename = new_filename.replacen(occurance, "", usize::from(args.times));
+            let occurrence = &args.remove_n;
+            new_filename = new_filename.replacen(occurrence, "", usize::from(args.times));
         }
 
         if args.main_filename != "" {
             new_filename += &args.main_filename;
         }
         if args.numbering && args.before_main_name {
-            new_filename =
-                pad_number(default_pad, args.pad, args.no_pad, count) + &args.separator + &new_filename;
+            new_filename = pad_number(default_pad, args.pad, args.no_pad, count)
+                + &args.separator
+                + &new_filename;
         }
         if args.prefix != "" {
             new_filename = args.prefix.clone() + &new_filename;
         }
 
         if args.numbering && !args.before_main_name {
-            new_filename =
-                new_filename + &args.separator + &pad_number(default_pad, args.pad, args.no_pad, count);
+            new_filename = new_filename
+                + &args.separator
+                + &pad_number(default_pad, args.pad, args.no_pad, count);
         }
 
         if args.extension_replace_by != "" {
@@ -60,6 +62,9 @@ pub fn process(args: &Args, filenames: &Vec<String>) -> Vec<String> {
         }
         if args.suffix != "" {
             new_filename += &args.suffix;
+        }
+        if args.crc {
+            new_filename = new_filename + " [" + &crc_list[index] + "]";
         }
 
         new_filename += &extension;

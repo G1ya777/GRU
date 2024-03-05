@@ -47,6 +47,10 @@ pub struct Args {
     #[arg(long, default_value_t = 1)]
     pub start: u32,
 
+    ///add crc32 checksum in hex at the end of the file
+    #[arg(long, default_value_t = false)]
+    pub crc: bool,
+
     ///replace the extension of the original title of all files with a new one (eg: .mp3)
     #[arg(short, long, default_value_t = String::new(), group = "extension_group",hide_default_value = true)]
     pub extension_replace_by: String,
@@ -123,7 +127,7 @@ pub struct Args {
 }
 
 // used for disabling when restore
-const RESTORE_CONFLICTS: [&str; 25] = [
+const RESTORE_CONFLICTS: [&str; 26] = [
     "clear",
     "prefix",
     "suffix",
@@ -145,6 +149,7 @@ const RESTORE_CONFLICTS: [&str; 25] = [
     "remove_all",
     "remove_n",
     "times",
+    "crc",
     "target_extension",
     "no_bcp",
     "incl_hidden",

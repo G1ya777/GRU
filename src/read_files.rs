@@ -1,5 +1,8 @@
+use crc32fast::Hasher;
 use rand::{prelude::thread_rng, seq::SliceRandom};
-use std::fs::{self, DirEntry};
+use std::fs::{self, DirEntry, File};
+use std::io::Read;
+use std::path::PathBuf;
 
 pub fn read(
     location: &str,
@@ -70,7 +73,30 @@ pub fn read(
     if desc {
         filtered_file_list.reverse();
     }
-    return filtered_file_list;
+
+    filtered_file_list
+}
+
+fn get_file_as_byte_vec(filepath: &PathBuf) -> Vec<u8> {
+    let mut f = File::open(&filepath).expect("no file found");
+    let metadata = fs::metadata(&filepath).expect("unable to read metadata");
+    let mut buffer = vec![0; metadata.len() as usize];
+    f.read(&mut buffer).expect("buffer overflow");
+
+    buffer
+}
+
+pub fn get_crc_list(file_list: &Vec<DirEntry>) -> Vec<String> {
+    let mut crc_list: Vec<String> = Vec::new();
+    for file in file_list.iter() {
+        let mut hasher = Hasher::new();
+
+        hasher.update(get_file_as_byte_vec(&file.path()).as_slice());
+        let checksum = hasher.finalize();
+        let checksum = format!("{:02X}", checksum);
+        crc_list.push(checksum);
+    }
+    crc_list
 }
 
 #[cfg(windows)]
