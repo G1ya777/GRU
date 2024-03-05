@@ -5,9 +5,9 @@ pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> 
     let default_pad =
         u8::try_from(filenames.len().to_string().len()).expect("error with number of files");
     for (index, filename) in filenames.iter().enumerate() {
-        let (subname, mut extension): (&str, &str) = get_file_extension(&filename);
+        let (sun_name, mut extension): (&str, &str) = get_file_extension(&filename);
 
-        let mut new_filename = subname.to_string();
+        let mut new_filename = sun_name.to_string();
 
         if args.target_extension != "" {
             if extension != args.target_extension {
@@ -81,9 +81,9 @@ fn get_file_extension(filename: &str) -> (&str, &str) {
         let extension: usize = filename.rfind(".").expect(
             "something is off with one of the file names! couldn't figure out the extension.",
         );
-        let subname: &str = &filename[..extension];
+        let sun_name: &str = &filename[..extension];
         let extension: &str = &filename[extension..];
-        return (subname, extension);
+        return (sun_name, extension);
     } else {
         return (filename, "");
     }

@@ -1,25 +1,26 @@
 # GRU : G Rename Utility
 
-A **cli tool** to batch rename all the files in the provided directory
+A **CLI tool** to batch rename files in the provided directory
 
 # Key features
 
 - **Backup file generated after every use**
 - **Avoids cycles**
-- **dry-run flags to preview changes**
+- **dry-run flag to preview changes**
 - **Detects and uses the correct padding for numbering**
 - **Ignore/Include hidden files**
 - **Random order**
 - **Target only one extension**
+- **Append CRC32 checksum in Hexadecimal at the end of files**
 - **Replace extension**
 - **Replace n or all occurrences of a string**
-- **All the basic stuff like clear og names, numbering, add prefix, remove n first...** for an exhaustive list of the options run `rename-gru --help`
+- **All the basic stuff like clear original names, numbering, add prefix, remove n first...** for an exhaustive list of the options run `rename-gru --help`
 
 # Install
 
-- **using crago** : `cargo install rename-gru`
+- **using cargo** : `cargo install rename-gru`
 - or build from source `git clone https://github.com/G1ya777/GRU && cd GRU` then `cargo build`
-- or use one of the binaries in the release section
+- on Arch Linux install from the AUR the package `rename-gru-git`
 
 # Usage examples
 
@@ -34,6 +35,9 @@ A **cli tool** to batch rename all the files in the provided directory
 
 - **rename .mp3 file only**<br />
   `rename-gru ~/myMusic --clear --prefix "song" --numbering --sort-by 3 -t ".mp3"`
+
+- **append CRC32 checksum at the end of each file**<br />
+  `rename-gru --crc ~/myAwsmFiles`
 
 - **restore original file names**<br />
   `rename-gru ~/myMusic --restore "~/myMusic/grubcp-2023-10-22-18-17-23.json"`

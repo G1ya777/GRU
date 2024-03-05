@@ -26,8 +26,8 @@ pub struct Args {
     #[arg(short, long, default_value_t = String::new(),hide_default_value = true)]
     pub main_filename: String,
 
-    /// String to use as a separator (default is "-")
-    #[arg(long, default_value_t = String::from("-"),hide_default_value = true)]
+    /// String to use as a separator (default is " - ")
+    #[arg(long, default_value_t = String::from(" - "),hide_default_value = true)]
     pub separator: String,
 
     /// Add numbering
@@ -67,14 +67,14 @@ pub struct Args {
     pub desc: bool,
 
     //only modify files and don't modify folders
-    #[arg(long, default_value_t = false, group = "file_or_foler_group")]
+    #[arg(long, default_value_t = false, group = "file_or_folder_group")]
     pub only_files: bool,
 
     //only modify folders and don't modify files
-    #[arg(long, default_value_t = false, group = "file_or_foler_group")]
+    #[arg(long, default_value_t = false, group = "file_or_folder_group")]
     pub only_folders: bool,
 
-    ///remove the first n caracters from the original title
+    ///remove the first n characters from the original title
     #[arg(
         short,
         long,
@@ -84,7 +84,7 @@ pub struct Args {
     )]
     pub first_n_remove: u8,
 
-    ///remove the last n caracters from the original title
+    ///remove the last n characters from the original title
     #[arg(
         short,
         long,
@@ -94,14 +94,14 @@ pub struct Args {
     )]
     pub last_n_remove: u8,
 
-    ///remove all occurances of a string from the original title
+    ///remove all occurrences of a string from the original title
     #[arg(short, long, default_value_t = String::new(),groups=["remove_group", "remove_n_group"],hide_default_value = true)]
     pub remove_all: String,
 
-    ///remove n occurances of a string (defaults to 1) from the original title (use --times to specify the number)
+    ///remove n occurrences of a string (defaults to 1) from the original title (use --times to specify the number)
     #[arg(long, default_value_t = String::new(), groups=["remove_group","clear_group"],hide_default_value = true)]
     pub remove_n: String,
-    ///use with remove_n to specify a number of occurances to remove
+    ///use with remove_n to specify a number of occurrences to remove
     #[arg(long, default_value_t = 1, groups = ["remove_n_group", "clear_group"],hide_default_value = true)]
     pub times: u8,
 
@@ -109,7 +109,7 @@ pub struct Args {
     #[arg(short, long, default_value_t = String::new(), groups = ["extension_group","extension_group_2"],hide_default_value = true)]
     pub target_extension: String,
 
-    /// disable backuping the original filenames
+    /// disable backing up the original filenames
     #[arg(long, default_value_t = false)]
     pub no_bcp: bool,
 
