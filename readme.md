@@ -11,7 +11,7 @@ A **CLI tool** to batch rename files in the provided directory
 - **Ignore/Include hidden files**
 - **Random order**
 - **Target only one extension**
-- **Append CRC32 checksum in Hexadecimal at the end of files**
+- **Append CRC32 checksum in Hexadecimal at the end of each file name**
 - **Replace extension**
 - **Replace n or all occurrences of a string**
 - **All the basic stuff like clear original names, numbering, add prefix, remove n first...** for an exhaustive list of the options run `rename-gru --help`
@@ -25,7 +25,7 @@ A **CLI tool** to batch rename files in the provided directory
 # Usage examples
 
 - **rename video files, add tags at the end**<br />
-  `rename-gru ~/myTvShow --clear --prefix "MTVS" --numbering --suffix "\ \[AWSMUploader\]\ \[1080P\]"`
+  `rename-gru ~/myTvShow --clear --prefix "MTVS" --numbering --suffix "[AWSMUploader] [1080P]"`
 
 - **rename background files, use random ordering**<br />
   `rename-gru ~/myBackgrounds --clear --prefix "bg" --numbering --sort-by 3`

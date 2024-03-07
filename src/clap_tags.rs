@@ -51,6 +51,10 @@ pub struct Args {
     #[arg(long, default_value_t = false)]
     pub crc: bool,
 
+    ///replace old String with a new one
+    #[arg(long, num_args = 2, value_names=["Replace","Replace_with"], hide_default_value = true)]
+    pub replace: Vec<String>,
+
     ///replace the extension of the original title of all files with a new one (eg: .mp3)
     #[arg(short, long, default_value_t = String::new(), group = "extension_group",hide_default_value = true)]
     pub extension_replace_by: String,
@@ -127,7 +131,7 @@ pub struct Args {
 }
 
 // used for disabling when restore
-const RESTORE_CONFLICTS: [&str; 26] = [
+const RESTORE_CONFLICTS: [&str; 27] = [
     "clear",
     "prefix",
     "suffix",
@@ -138,6 +142,7 @@ const RESTORE_CONFLICTS: [&str; 26] = [
     "no_pad",
     "before_main_name",
     "start",
+    "replace",
     "extension_replace_by",
     "extension_to_replace",
     "sort_by",
