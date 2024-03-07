@@ -37,7 +37,7 @@ pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> 
             new_filename = new_filename.replacen(occurrence, "", usize::from(args.times));
         }
 
-        if args.replace[0] != "" {
+        if args.replace.len() == 2 {
             new_filename = new_filename.replace(&args.replace[0], &args.replace[1]);
         }
 
