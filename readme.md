@@ -2,6 +2,12 @@
 
 A **CLI tool** to batch rename files in the provided directory
 
+<div align="center">
+<img alt="Crates.io Version" src="https://img.shields.io/crates/v/rename-gru">
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/G1ya777/GRU">
+<img alt="Crates.io License" src="https://img.shields.io/crates/l/rename-gru">
+</div>
+
 # Key features
 
 - **Backup file generated after every use**
@@ -14,7 +20,9 @@ A **CLI tool** to batch rename files in the provided directory
 - **Append CRC32 checksum in Hexadecimal at the end of each file name**
 - **Replace extension**
 - **Replace n or all occurrences of a string**
+- **Convert Unicode to ASCII representation**
 - **All the basic stuff like clear original names, numbering, add prefix, remove n first...** for an exhaustive list of the options run `rename-gru --help`
+- **Linux and Windows are supported, it should also work on macOS, but I can't test**
 
 # Install
 

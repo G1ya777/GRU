@@ -6,8 +6,8 @@ pub struct Args {
     #[arg(long, default_value_t = String::new(), conflicts_with_all = RESTORE_CONFLICTS,hide_default_value = true)]
     pub restore: String,
 
-    ///location of the files to rename
-    #[arg(index=1, default_value_t = String::new(),hide_default_value = true)]
+    ///location of the files to rename (defaults to the current location)
+    #[arg(index=1, default_value_t = String::from("."),hide_default_value = true)]
     pub location: String,
 
     ///use if you wanna clear the original titles and start naming from scratch (the extension will be kept)
@@ -47,7 +47,7 @@ pub struct Args {
     #[arg(long, default_value_t = 1)]
     pub start: u32,
 
-    ///add crc32 checksum in hex at the end of the file
+    ///add crc32 checksum in hex at the end of the file (folders won't be renamed if this option is used)
     #[arg(long, default_value_t = false)]
     pub crc: bool,
 
@@ -125,13 +125,17 @@ pub struct Args {
     #[arg(long, default_value_t = false)]
     pub incl_hidden: bool,
 
+    /// convert utf-8 to ascii
+    #[arg(long, default_value_t = false)]
+    pub to_ascii: bool,
+
     // use to preview file names, w/o writing.
     #[arg(long, default_value_t = false)]
     pub dry_run: bool,
 }
 
 // used for disabling when restore
-const RESTORE_CONFLICTS: [&str; 27] = [
+const RESTORE_CONFLICTS: [&str; 28] = [
     "clear",
     "prefix",
     "suffix",
@@ -159,4 +163,5 @@ const RESTORE_CONFLICTS: [&str; 27] = [
     "no_bcp",
     "incl_hidden",
     "dry_run",
+    "to_ascii",
 ];

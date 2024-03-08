@@ -18,6 +18,7 @@ rand = "0.8"
 renamore = "0.3"
 serde_json = "1.0"
 crc32fast = "1.4"
+any_ascii = "0.3"
 
 [profile.release]
 opt-level = 'z'   # Optimize for size

@@ -1,19 +1,25 @@
 use crate::clap_tags::Args;
+use any_ascii::any_ascii;
+
 pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> Vec<String> {
     let mut new_filenames: Vec<String> = vec![];
     let mut count: u32 = args.start;
     let default_pad =
         u8::try_from(filenames.len().to_string().len()).expect("error with number of files");
     for (index, filename) in filenames.iter().enumerate() {
-        let (sun_name, mut extension): (&str, &str) = get_file_extension(&filename);
+        let (sub_name, mut extension): (&str, &str) = get_file_extension(&filename);
 
-        let mut new_filename = sun_name.to_string();
+        let mut new_filename = sub_name.to_string();
 
         if args.target_extension != "" {
             if extension != args.target_extension {
                 new_filename += &extension;
                 continue;
             }
+        }
+
+        if args.to_ascii {
+            new_filename = any_ascii(&filename)
         }
 
         if args.clear {
@@ -70,14 +76,15 @@ pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> 
         if args.crc {
             new_filename = new_filename + " [" + &crc_list[index] + "]";
         }
-
-        new_filename += &extension;
+        if extension != "" {
+            new_filename += extension;
+        }
 
         //last
         count += 1;
         new_filenames.push(new_filename)
     }
-    return new_filenames;
+    new_filenames
 }
 
 fn get_file_extension(filename: &str) -> (&str, &str) {
@@ -101,5 +108,5 @@ fn pad_number(default_pad: u8, pad: u8, no_pad: bool, count: u32) -> String {
         pad_value = 0
     }
     let number = format!("{:0width$}", &count, width = usize::from(pad_value));
-    return number;
+    number
 }

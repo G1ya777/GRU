@@ -7,7 +7,7 @@ use std::{
     path::PathBuf,
 };
 
-pub fn backup(filenames_list: &Vec<String>, location: &String) {
+pub fn backup(filenames_list: &Vec<String>, location: &String) -> String {
     let backup_path = {
         let mut path = PathBuf::new();
         path.push(location);
@@ -18,8 +18,7 @@ pub fn backup(filenames_list: &Vec<String>, location: &String) {
         path
     };
 
-    // let backup_path: &Path = backup_path.as_path();
-    let file: File = File::create(backup_path).expect("error when creating file for backup!");
+    let file: File = File::create(&backup_path).expect("error when creating file for backup!");
 
     let mut backup_data: Vec<String> = vec![];
     for filename in filenames_list.iter() {
@@ -49,11 +48,14 @@ pub fn backup(filenames_list: &Vec<String>, location: &String) {
         }
 
         let data = filename + "#" + &id_string;
-        backup_data.push(data)
+        backup_data.push(data);
     }
-
     let mut writer = BufWriter::new(file);
-    serde_json::to_writer(&mut writer, &backup_data).expect("error when saving backup data!")
+    serde_json::to_writer(&mut writer, &backup_data).expect("error when saving backup data!");
+    backup_path
+        .to_str()
+        .expect("Failed to get the backup file location")
+        .to_owned()
 }
 
 pub fn restore(backup_file_location: String, file_list: &Vec<DirEntry>) {
