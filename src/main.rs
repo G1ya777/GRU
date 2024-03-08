@@ -23,6 +23,7 @@ fn main() {
         args.only_folders,
         args.incl_hidden && args.restore == "",
         args.crc,
+        args.target_extension != "",
     );
 
     if args.restore != "" {
@@ -77,6 +78,7 @@ fn main() {
                                     args.only_folders,
                                     args.incl_hidden && args.restore == "",
                                     args.crc,
+                                    args.target_extension != "",
                                 );
                                 backup::restore(backup_path, &file_list);
                                 println!("a backup restore was attempted");

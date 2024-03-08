@@ -12,6 +12,7 @@ pub fn read(
     only_folders: bool,
     _incl_hidden: bool,
     crc: bool,
+    target_extension: bool,
 ) -> Vec<DirEntry> {
     // read the specified directory
     let file_set = fs::read_dir(location).expect("something went wrong with the provided location");
@@ -22,7 +23,7 @@ pub fn read(
     #[cfg(windows)]
     let mut filtered_file_list: Vec<DirEntry> = file_list
         .into_iter()
-        .filter(|file| !only_files || file.path().is_file())
+        .filter(|file| !only_files && !crc && !target_extension || file.path().is_file())
         .filter(|file| !only_folders || file.path().is_dir())
         .filter(|file| _incl_hidden || !is_hidden(&file.path()))
         .filter(|file| {
@@ -38,7 +39,7 @@ pub fn read(
     //filtering is done in get_filenames modules on unix
     let mut filtered_file_list: Vec<DirEntry> = file_list
         .into_iter()
-        .filter(|file| !only_files && !crc || file.path().is_file())
+        .filter(|file| !only_files && !crc && !target_extension || file.path().is_file())
         .filter(|file| !only_folders || file.path().is_dir())
         .filter(|file| {
             !file
