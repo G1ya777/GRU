@@ -51,13 +51,18 @@ fn main() {
             //temporary renaming
             if !args.no_temp_rename {
                 let mut temp_filenames: Vec<String> = vec![];
-                for _ in 0..new_filenames.len() {
-                    let temp_filename = "temp-".to_string()
-                        + &Utc::now()
-                            .to_string()
-                            .replace(" ", "_")
-                            .replace(":", "_")
-                            .replace(".", "_");
+                let mut temp_filename;
+                for new_filename in new_filenames.iter() {
+                    if new_filename != "" {
+                        temp_filename = "temp-".to_string()
+                            + &Utc::now()
+                                .to_string()
+                                .replace(" ", "_")
+                                .replace(":", "_")
+                                .replace(".", "_");
+                    } else {
+                        temp_filename = String::from("");
+                    }
                     temp_filenames.push(temp_filename)
                 }
                 if !args.dry_run {

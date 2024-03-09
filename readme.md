@@ -115,13 +115,13 @@ Options:
 - **rename background files, use random ordering**<br />
   `rename-gru ~/myBackgrounds --clear --prefix "bg" --numbering --sort-by 3`
 
-- **keep title and add numbering at the start of the file**
+- **keep title and add numbering at the start of the file**<br />
   `rename-gru ~/myBackgrounds --numbering -b --sort-by 3`
 
 - **rename .mp3 file only**<br />
   `rename-gru ~/myMusic --clear --prefix "song" --numbering --sort-by 3 -t ".mp3"`
 
-- **append CRC32 checksum at the end of each file**<br />
+- **append CRC32 checksum at the end of each filename**<br />
   `rename-gru --crc ~/myAwsmFiles`
 
 - **restore original file names**<br />

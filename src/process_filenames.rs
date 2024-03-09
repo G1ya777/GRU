@@ -13,11 +13,11 @@ pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> 
 
         if args.target_extension != "" {
             if extension != args.target_extension {
-                new_filename += &extension;
+                new_filename = String::from("");
+                new_filenames.push(new_filename);
                 continue;
             }
         }
-
         if args.to_ascii {
             new_filename = any_ascii(&filename)
         }
@@ -66,9 +66,7 @@ pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> 
         }
 
         if args.extension_replace_by != "" {
-            if args.extension_to_replace == "" || args.extension_to_replace == extension {
-                extension = &args.extension_replace_by;
-            }
+            extension = &args.extension_replace_by;
         }
         if args.suffix != "" {
             new_filename += &args.suffix;
@@ -92,11 +90,11 @@ fn get_file_extension(filename: &str) -> (&str, &str) {
         let extension: usize = filename.rfind(".").expect(
             "something is off with one of the file names! couldn't figure out the extension.",
         );
-        let sun_name: &str = &filename[..extension];
+        let sub_name: &str = &filename[..extension];
         let extension: &str = &filename[extension..];
-        return (sun_name, extension);
+        (sub_name, extension)
     } else {
-        return (filename, "");
+        (filename, "")
     }
 }
 

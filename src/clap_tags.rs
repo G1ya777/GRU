@@ -44,10 +44,10 @@ pub struct Args {
     #[arg(short, long, default_value_t = false)]
     pub before_main_name: bool,
     /// custom numbering start (default is 1)
-    #[arg(long, default_value_t = 1)]
+    #[arg(long, default_value_t = 1, hide_default_value = true)]
     pub start: u32,
 
-    ///add crc32 checksum in hex at the end of the file (folders won't be renamed if this option is used)
+    ///add crc32 checksum in hex at the end each  filename (folders won't be renamed if this option is used)
     #[arg(long, default_value_t = false)]
     pub crc: bool,
 
@@ -55,12 +55,9 @@ pub struct Args {
     #[arg(long, num_args = 2, value_names=["Replace","Replace_with"], hide_default_value = true)]
     pub replace: Vec<String>,
 
-    ///replace the extension of the original title of all files with a new one (eg: .mp3)
-    #[arg(short, long, default_value_t = String::new(), group = "extension_group",hide_default_value = true)]
+    ///replace the extension of the original title of all files with a new one (eg: .mp3) (also use -t to target files with a certain extension)
+    #[arg(short, long, default_value_t = String::new(),hide_default_value = true)]
     pub extension_replace_by: String,
-    ///replace the extension of the original title, restrict to provided extension only (defaults to all files), (eg: .mp4)
-    #[arg(long, default_value_t = String::new(), group = "extension_group_2",hide_default_value = true)]
-    pub extension_to_replace: String,
 
     ///how to sort files, default is 0 (by name), 1 is by modification date, 2 for date created, 3 for random.
     #[arg(long, default_value_t = 0, hide_default_value = true)]
@@ -70,11 +67,11 @@ pub struct Args {
     #[arg(long, default_value_t = false)]
     pub desc: bool,
 
-    //only modify files and don't modify folders
+    ///only modify files and don't modify folders
     #[arg(long, default_value_t = false, group = "file_or_folder_group")]
     pub only_files: bool,
 
-    //only modify folders and don't modify files
+    ///only modify folders and don't modify files
     #[arg(long, default_value_t = false, group = "file_or_folder_group")]
     pub only_folders: bool,
 
@@ -110,7 +107,7 @@ pub struct Args {
     pub times: u8,
 
     ///apply renaming only to files ending with provided extension (eg : .jpg)
-    #[arg(short, long, default_value_t = String::new(), groups = ["extension_group","extension_group_2"],hide_default_value = true)]
+    #[arg(short, long, default_value_t = String::new(),hide_default_value = true)]
     pub target_extension: String,
 
     /// disable backing up the original filenames
@@ -129,13 +126,13 @@ pub struct Args {
     #[arg(long, default_value_t = false)]
     pub to_ascii: bool,
 
-    // use to preview file names, w/o writing.
+    /// use to preview file names, w/o writing.
     #[arg(long, default_value_t = false)]
     pub dry_run: bool,
 }
 
 // used for disabling when restore
-const RESTORE_CONFLICTS: [&str; 28] = [
+const RESTORE_CONFLICTS: [&str; 27] = [
     "clear",
     "prefix",
     "suffix",
@@ -148,7 +145,6 @@ const RESTORE_CONFLICTS: [&str; 28] = [
     "start",
     "replace",
     "extension_replace_by",
-    "extension_to_replace",
     "sort_by",
     "desc",
     "only_files",
