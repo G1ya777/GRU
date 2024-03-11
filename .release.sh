@@ -27,14 +27,14 @@ program_help_output=$(just help 2>&1)
 program_help_output=$(echo "$program_help_output" | sed '1,2d')
 
 
-printf "<!-- rename-gru --help output -->\n\`\`\`\n%s\n\`\`\`\n<!--> end of rename-gru --help command output <-->
+printf "<!-- rename-gru --help output -->\n\`\`\`\n%s\n\`\`\`\n<!-- end of rename-gru --help command output -->
 " "$program_help_output" > help_output.tmp
 
 readme=readme.md
 
 
 start_comment_line_number=$(grep -n "<!-- rename-gru --help output -->" "$readme" | cut -d ":" -f 1)
-end_comment_line_number=$(grep -n "<!--> end of rename-gru --help command output " "$readme" | cut -d ":" -f 1) 
+end_comment_line_number=$(grep -n "<!-- end of rename-gru --help command output -->" "$readme" | cut -d ":" -f 1) 
 
 
 

@@ -98,7 +98,7 @@ fn main() {
                             .read_line(&mut confirm)
                             .expect("Failed to read confirmation");
                         confirm = confirm.trim().to_string();
-                        if confirm != "y" || confirm != "Y" {
+                        if confirm != "y" && confirm != "Y" {
                             println!("Renaming was aborted.");
                             process::exit(0);
                         }

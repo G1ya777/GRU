@@ -59,7 +59,7 @@ A **CLI tool** to batch rename files in the provided directory
     └── other_video.mkv
 ```
 
-- **`rename-gru --clear --main-filename "\ \-\ main\ \-\ " --prefix "prefix" -suffix "\ \-\ suffix" --numbering ./other`**
+- **`rename-gru --clear --main-filename " - main - " --prefix "prefix" -suffix " - suffix" --numbering ./other`**
 
 ```
 data -------> prefix - main - 1 - suffix
@@ -69,7 +69,7 @@ video.mp4 -------> prefix - main - 3 - suffix.mp4
 ```
 
 - **rename video files, add tags at the end**<br />
-  `rename-gru ./videos  --clear --prefix "MTVS" --numbering --suffix "[AWSMUploader]\ [1080P]""`
+  `rename-gru ./videos  --clear --prefix "MTVS" --numbering --suffix "[AWSMUploader] [1080P]""`
 
 ```
 file.mkv -------> MTVS1[AWSMUploader] [1080P].mkv
@@ -91,7 +91,7 @@ img1.png -------> bg4.png
 ```
 
 - **keep title and add numbering at the start of the file**<br />
-  `rename-gru ./images --main-filename \ \-\  -B --numbering -b --sort-by 3`
+  `rename-gru ./images --main-filename " - " -B --numbering -b --sort-by 3`
 
 ```
 image.png -------> 1 - image.png
@@ -134,7 +134,6 @@ other_video.mkv -------> other_video [23233DEC].mkv
 # Usage
 
 <!-- rename-gru --help output -->
-
 ```
 A CLI tool to batch rename files in the provided directory
 
@@ -145,7 +144,7 @@ Arguments:
 
 Options:
       --restore <RESTORE>
-
+          
   -c, --clear
           use if you wanna clear the original titles and start naming from scratch (the extension will be kept)
   -p, --prefix <PREFIX>
@@ -161,7 +160,7 @@ Options:
       --pad <PAD>
           specify padding for numbering, use --no-pad to disable (defaults to number of digits of number of files - 1)
       --no-pad
-
+          
   -b, --before-main-name
           numbering position, can be before main_filename or after main_filename (default)
       --start <START>
@@ -209,8 +208,7 @@ Options:
   -V, --version
           Print version
 ```
-
-<!--> end of rename-gru --help command output <-->
+<!-- end of rename-gru --help command output -->
 
 # Found a bug or want a new feature ?
 

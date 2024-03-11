@@ -363,7 +363,7 @@ dependencies = [
 
 [[package]]
 name = "rename-gru"
-version = "0.9.0"
+version = "0.9.1"
 dependencies = [
  "any_ascii",
  "chrono",

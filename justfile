@@ -6,7 +6,7 @@ build_no_output:
  $(cargo build > /dev/null 2>&1)
 
 publish: 
- release.sh
+ .release.sh
  cargo publish
 
 help: build_no_output 
