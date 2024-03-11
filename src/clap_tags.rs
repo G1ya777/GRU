@@ -22,13 +22,13 @@ pub struct Args {
     #[arg(short, long, default_value_t = String::new(),hide_default_value = true)]
     pub suffix: String,
 
-    /// add a main filename (when --clear it is added before the original filename)
+    /// add a main filename (when --clear isn't used it is added after the original filename)
     #[arg(short, long, default_value_t = String::new(),hide_default_value = true)]
     pub main_filename: String,
 
-    /// String to use as a separator (default is " - ")
-    #[arg(long, default_value_t = String::from(" - "),hide_default_value = true)]
-    pub separator: String,
+    /// add the main filename before the original filename when --clear isn't used
+    #[arg(short = 'B', default_value_t = false)]
+    pub main_before: bool,
 
     /// Add numbering
     #[arg(short, long, default_value_t = false)]
@@ -129,6 +129,10 @@ pub struct Args {
     /// use to preview file names, w/o writing.
     #[arg(long, default_value_t = false)]
     pub dry_run: bool,
+
+    /// perform rename w/o asking for y/n
+    #[arg(long, default_value_t = false)]
+    pub noconfirm: bool,
 }
 
 // used for disabling when restore
@@ -136,7 +140,6 @@ const RESTORE_CONFLICTS: [&str; 27] = [
     "clear",
     "prefix",
     "suffix",
-    "separator",
     "main_filename",
     "numbering",
     "pad",
@@ -160,4 +163,5 @@ const RESTORE_CONFLICTS: [&str; 27] = [
     "incl_hidden",
     "dry_run",
     "to_ascii",
+    "noconfirm",
 ];

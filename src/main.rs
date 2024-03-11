@@ -1,6 +1,8 @@
 use chrono::prelude::*;
 use clap::Parser;
+use std::io;
 use std::panic;
+use std::process;
 use std::{fs::DirEntry, vec};
 
 //modules
@@ -40,13 +42,11 @@ fn main() {
         if &args.restore == "" {
             let new_filenames = process_filenames::process(&args, &filenames, &crc_list);
             if args.dry_run {
-                for filename in &new_filenames {
-                    println!("{filename}")
+                for i in 0..filenames.len() {
+                    if new_filenames[i] != "" {
+                        println!("{} -------> {}", filenames[i], new_filenames[i]);
+                    }
                 }
-            }
-
-            if !args.no_bcp && !args.dry_run {
-                backup_path = backup::backup(&filenames, &args.location);
             }
             //temporary renaming
             if !args.no_temp_rename {
@@ -65,13 +65,55 @@ fn main() {
                     }
                     temp_filenames.push(temp_filename)
                 }
+                let mut sorted_new_filenames: Vec<String> = new_filenames
+                    .clone()
+                    .into_iter()
+                    .filter(|filename| filename != "")
+                    .collect();
+                sorted_new_filenames.sort_by_cached_key(|filename| filename.to_owned());
+
+                //length of sorted_new_filenames before dedup
+                let len_sorted_new_filenames = sorted_new_filenames.len();
+
+                //removing of duplicates
+                sorted_new_filenames.dedup();
+
+                if sorted_new_filenames.len() != len_sorted_new_filenames {
+                    println!(
+                        "Naming conflict detected! Try using -n option. Renaming was aborted."
+                    );
+                    process::exit(0);
+                }
+
                 if !args.dry_run {
+                    if !args.noconfirm {
+                        for i in 0..filenames.len() {
+                            if new_filenames[i] != "" {
+                                println!("{} -------> {}", filenames[i], new_filenames[i]);
+                            }
+                        }
+                        println!("Perform renaming ? (y/N)");
+                        let mut confirm = String::new();
+                        io::stdin()
+                            .read_line(&mut confirm)
+                            .expect("Failed to read confirmation");
+                        confirm = confirm.trim().to_string();
+                        if confirm != "y" || confirm != "Y" {
+                            println!("Renaming was aborted.");
+                            process::exit(0);
+                        }
+                    }
+                    if !args.no_bcp {
+                        backup_path = backup::backup(&filenames, &args.location);
+                    }
                     write_new_filenames::write(&args.location, &filenames, &temp_filenames);
                     let rename_result = panic::catch_unwind(|| {
                         write_new_filenames::write(&args.location, &temp_filenames, &new_filenames);
                     });
                     match rename_result {
-                        Ok(_) => {}
+                        Ok(_) => {
+                            println!("Renaming performed.")
+                        }
                         Err(_) => {
                             println!("triggered");
                             if !args.no_bcp && !args.dry_run {
@@ -98,6 +140,6 @@ fn main() {
             }
         }
     } else {
-        println!("the specified folder is empty")
+        println!("The specified folder is empty.")
     }
 }

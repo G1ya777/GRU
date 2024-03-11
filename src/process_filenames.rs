@@ -48,21 +48,22 @@ pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> 
         }
 
         if args.main_filename != "" {
-            new_filename += &args.main_filename;
+            if args.before_main_name {
+                new_filename = args.main_filename.to_owned() + &new_filename;
+            } else {
+                new_filename += &args.main_filename;
+            }
         }
+
         if args.numbering && args.before_main_name {
-            new_filename = pad_number(default_pad, args.pad, args.no_pad, count)
-                + &args.separator
-                + &new_filename;
+            new_filename = pad_number(default_pad, args.pad, args.no_pad, count) + &new_filename;
         }
         if args.prefix != "" {
             new_filename = args.prefix.clone() + &new_filename;
         }
 
         if args.numbering && !args.before_main_name {
-            new_filename = new_filename
-                + &args.separator
-                + &pad_number(default_pad, args.pad, args.no_pad, count);
+            new_filename += &pad_number(default_pad, args.pad, args.no_pad, count);
         }
 
         if args.extension_replace_by != "" {
@@ -80,12 +81,12 @@ pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> 
 
         //last
         count += 1;
-        new_filenames.push(new_filename)
+        new_filenames.push(new_filename.trim().to_string())
     }
     new_filenames
 }
 
-fn get_file_extension(filename: &str) -> (&str, &str) {
+pub fn get_file_extension(filename: &str) -> (&str, &str) {
     if filename.contains(".") {
         let extension: usize = filename.rfind(".").expect(
             "something is off with one of the file names! couldn't figure out the extension.",
