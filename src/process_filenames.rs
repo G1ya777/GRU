@@ -5,7 +5,7 @@ pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> 
     let mut new_filenames: Vec<String> = vec![];
     let mut count: u32 = args.start;
     let default_pad =
-        u8::try_from(filenames.len().to_string().len()).expect("error with number of files");
+        u8::try_from(filenames.len().to_string().len()).expect("Error with number of files");
     for (index, filename) in filenames.iter().enumerate() {
         let (sub_name, mut extension): (&str, &str) = get_file_extension(&filename);
 
@@ -89,7 +89,7 @@ pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> 
 pub fn get_file_extension(filename: &str) -> (&str, &str) {
     if filename.contains(".") {
         let extension: usize = filename.rfind(".").expect(
-            "something is off with one of the file names! couldn't figure out the extension.",
+            "Something is off with one of the file names! couldn't figure out the extension.",
         );
         let sub_name: &str = &filename[..extension];
         let extension: &str = &filename[extension..];

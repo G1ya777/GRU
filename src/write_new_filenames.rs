@@ -9,7 +9,7 @@ pub fn write(location: &str, filenames: &Vec<String>, new_filenames: &Vec<String
 
             // Rename the file to the new path
             rename_exclusive(file_path, &new_file_path)
-                .expect("failed to rename, try removing --no-temp-rename flag");
+                .expect("Failed to rename, try removing --no-temp-rename flag");
         }
     }
 }

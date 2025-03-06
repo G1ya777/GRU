@@ -25,7 +25,7 @@ fn main() {
         args.only_folders,
         args.incl_hidden && args.restore == "",
         args.crc,
-        args.target_extension != "",
+        &args.target_extension,
     );
 
     if args.restore != "" {
@@ -37,7 +37,7 @@ fn main() {
     if !filenames.is_empty() {
         let mut crc_list: Vec<String> = Vec::new();
         if args.crc {
-            crc_list = read_files::get_crc_list(&file_list);
+            crc_list = read_files::get_crc_list(&file_list, &args.target_extension);
         }
         if &args.restore == "" {
             let new_filenames = process_filenames::process(&args, &filenames, &crc_list);
@@ -99,7 +99,7 @@ fn main() {
                             .expect("Failed to read confirmation");
                         confirm = confirm.trim().to_string();
                         if confirm != "y" && confirm != "Y" {
-                            println!("Renaming was aborted.");
+                            println!("Renaming was aborted by user.");
                             process::exit(0);
                         }
                     }
@@ -115,7 +115,6 @@ fn main() {
                             println!("Renaming performed.")
                         }
                         Err(_) => {
-                            println!("triggered");
                             if !args.no_bcp && !args.dry_run {
                                 let file_list: Vec<DirEntry> = read_files::read(
                                     &args.location,
@@ -125,10 +124,10 @@ fn main() {
                                     args.only_folders,
                                     args.incl_hidden && args.restore == "",
                                     args.crc,
-                                    args.target_extension != "",
+                                    &args.target_extension,
                                 );
                                 backup::restore(backup_path, &file_list);
-                                println!("a backup restore was attempted");
+                                println!("A backup restore was attempted");
                             }
                         }
                     }
