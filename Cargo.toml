@@ -1,9 +1,9 @@
 [package]
 name = "rename-gru"
-version = "0.9.2"
+version = "0.9.3"
 edition = "2021"
 keywords = ["rename-utility", "cli", "rename", "batch", "command"]
-categories = ["command-line-utilities", "cli"]
+categories = ["command-line-utilities"]
 license = "MIT"
 description = "A CLI tool to batch rename files in the provided directory"
 readme = "readme.md"
