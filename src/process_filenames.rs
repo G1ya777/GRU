@@ -48,7 +48,7 @@ pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> 
         }
 
         if args.main_filename != "" {
-            if args.before_main_name {
+            if args.main_before {
                 new_filename = args.main_filename.to_owned() + &new_filename;
             } else {
                 new_filename += &args.main_filename;
