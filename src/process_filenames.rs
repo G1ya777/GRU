@@ -19,7 +19,7 @@ pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> 
             }
         }
         if args.to_ascii {
-            new_filename = any_ascii(&filename)
+            new_filename = any_ascii(&new_filename)
         }
 
         if args.clear {
@@ -73,7 +73,9 @@ pub fn process(args: &Args, filenames: &Vec<String>, crc_list: &Vec<String>) -> 
             new_filename += &args.suffix;
         }
         if args.crc {
-            new_filename = new_filename + " [" + &crc_list[index] + "]";
+            if crc_list[index] != "" {
+                new_filename = new_filename + " [" + &crc_list[index] + "]";
+            }
         }
         if extension != "" {
             new_filename += extension;

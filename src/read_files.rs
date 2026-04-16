@@ -92,7 +92,7 @@ fn get_file_as_byte_vec(filepath: &PathBuf) -> Vec<u8> {
     buffer
 }
 
-pub fn get_crc_list(file_list: &Vec<DirEntry>, target_extension: &str) -> Vec<String> {
+pub fn get_crc_list(file_list: &Vec<DirEntry>, crc_target: &str) -> Vec<String> {
     let mut crc_list: Vec<String> = Vec::new();
     for file in file_list.iter() {
         let filename = file
@@ -100,12 +100,14 @@ pub fn get_crc_list(file_list: &Vec<DirEntry>, target_extension: &str) -> Vec<St
             .to_str()
             .expect("Failed to read one of the files in the specified folder")
             .to_owned();
-        if process_filenames::get_file_extension(&filename).1 == target_extension {
+
+        if process_filenames::get_file_extension(&filename).1 == crc_target || crc_target == "" {
             let mut hasher = Hasher::new();
 
             hasher.update(get_file_as_byte_vec(&file.path()).as_slice());
             let checksum = hasher.finalize();
             let checksum = format!("{:02X}", checksum);
+            println!("{}", checksum);
             crc_list.push(checksum);
         } else {
             crc_list.push("".to_string());

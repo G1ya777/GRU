@@ -37,7 +37,7 @@ fn main() {
     if !filenames.is_empty() {
         let mut crc_list: Vec<String> = Vec::new();
         if args.crc {
-            crc_list = read_files::get_crc_list(&file_list, &args.target_extension);
+            crc_list = read_files::get_crc_list(&file_list, &args.crc_target);
         }
         if &args.restore == "" {
             let new_filenames = process_filenames::process(&args, &filenames, &crc_list);

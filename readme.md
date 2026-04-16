@@ -165,16 +165,18 @@ Options:
           numbering position, can be before main_filename or after main_filename (default)
       --start <START>
           custom numbering start (default is 1)
+      --sort-by <SORT_BY>
+          how to sort files, default is 0 (by name), 1 is by modification date, 2 for date created, 3 for random. (for this to be useful numbering should be at the start of the file.)
+      --desc
+          set file sort to descending
       --crc
           add crc32 checksum in hex at the end each  filename (folders won't be renamed if this option is used)
+      --crc-target <CRC_TARGET>
+          add crc32 checksum only to files ending with provided extension (eg : .jpg)
       --replace <Replace> <Replace_with>
           replace old String with a new one
   -e, --extension-replace-by <EXTENSION_REPLACE_BY>
           replace the extension of the original title of all files with a new one (eg: .mp3) (also use -t to target files with a certain extension)
-      --sort-by <SORT_BY>
-          how to sort files, default is 0 (by name), 1 is by modification date, 2 for date created, 3 for random
-      --desc
-          set file sort to descending
       --only-files
           only modify files and don't modify folders
       --only-folders

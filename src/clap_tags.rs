@@ -47,9 +47,20 @@ pub struct Args {
     #[arg(long, default_value_t = 1, hide_default_value = true)]
     pub start: u32,
 
+    ///how to sort files, default is 0 (by name), 1 is by modification date, 2 for date created, 3 for random. (for this to be useful numbering should be at the start of the file.)
+    #[arg(long, default_value_t = 0, hide_default_value = true)]
+    pub sort_by: u8,
+
+    ///set file sort to descending
+    #[arg(long, default_value_t = false)]
+    pub desc: bool,
+
     ///add crc32 checksum in hex at the end each  filename (folders won't be renamed if this option is used)
     #[arg(long, default_value_t = false)]
     pub crc: bool,
+    ///add crc32 checksum only to files ending with provided extension (eg : .jpg)
+    #[arg(long, default_value_t = String::new(),hide_default_value = true)]
+    pub crc_target: String,
 
     ///replace old String with a new one
     #[arg(long, num_args = 2, value_names=["Replace","Replace_with"], hide_default_value = true)]
@@ -58,14 +69,6 @@ pub struct Args {
     ///replace the extension of the original title of all files with a new one (eg: .mp3) (also use -t to target files with a certain extension)
     #[arg(short, long, default_value_t = String::new(),hide_default_value = true)]
     pub extension_replace_by: String,
-
-    ///how to sort files, default is 0 (by name), 1 is by modification date, 2 for date created, 3 for random.
-    #[arg(long, default_value_t = 0, hide_default_value = true)]
-    pub sort_by: u8,
-
-    ///set file sort to descending
-    #[arg(long, default_value_t = false)]
-    pub desc: bool,
 
     ///only modify files and don't modify folders
     #[arg(long, default_value_t = false, group = "file_or_folder_group")]
@@ -136,7 +139,7 @@ pub struct Args {
 }
 
 // used for disabling when restore
-const RESTORE_CONFLICTS: [&str; 27] = [
+const RESTORE_CONFLICTS: [&str; 28] = [
     "clear",
     "prefix",
     "suffix",
@@ -158,6 +161,7 @@ const RESTORE_CONFLICTS: [&str; 27] = [
     "remove_n",
     "times",
     "crc",
+    "crc_target",
     "target_extension",
     "no_bcp",
     "incl_hidden",
